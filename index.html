@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Sama Kamu ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 35px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    width: 90%;
+    max-width: 420px;
+    z-index: 2;
+  }
+
+  h1 { color: #ff3366; }
+  p { font-size: 18px; }
+
+  .buttons {
+    position: relative;
+    height: 140px;
+    margin-top: 25px;
+  }
+
+  button {
+    padding: 14px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    position: absolute;
+    transition: 0.15s;
+  }
+
+  #yesBtn {
+    background: #ff3366;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #noBtn {
+    background: #adb5bd;
+    color: white;
+  }
+
+  .tease {
+    margin-top: 15px;
+    color: #ff3366;
+    font-weight: 500;
+    min-height: 24px;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .option {
+    padding: 16px;
+    border-radius: 20px;
+    background: #ffe3ea;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+  }
+
+  .option:hover {
+    background: #ffccd5;
+    transform: scale(1.05);
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 18px;
+    animation: float 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes float {
+    from { transform: translateY(0); opacity: 0.8; }
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="content">
+  <h1>💖 Valentine Question 💖</h1>
+  <p>Maukah Kamu Valentine Denganku?</p>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="showDateType()">YES 💕</button>
+    <button id="noBtn" onmouseover="escapeNo()">NO 🙈</button>
+  </div>
+
+  <div class="tease" id="teaseText"></div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const teaseText = document.getElementById("teaseText");
+  let scale = 1, speed = 1, fail = 0;
+
+  const teases = [
+    "Eits… yakin nolak? 😏",
+    "Aku tau kamu mau YES ❤️",
+    "Jangan bohong sama hati sendiri 💕",
+    "Tombol YES keliatan manis kan 😌"
+  ];
+
+  function escapeNo() {
+    fail++;
+    scale = Math.max(0.4, scale - 0.07);
+    speed += 0.2;
+
+    noBtn.style.transform = `scale(${scale})`;
+
+    const area = document.querySelector(".buttons");
+    noBtn.style.left = Math.random() * (area.offsetWidth - noBtn.offsetWidth) * speed + "px";
+    noBtn.style.top = Math.random() * (area.offsetHeight - noBtn.offsetHeight) * speed + "px";
+
+    teaseText.innerText = fail >= 10
+      ? "Udah ya, aku capek dikejar, klik YES aja 😆❤️"
+      : teases[Math.floor(Math.random() * teases.length)];
+  }
+
+  function showDateType() {
+    document.getElementById("content").innerHTML = `
+      <h1>YEAY, One Step Again ❤️</h1>
+      <p>Pilih tempat date kita 💕</p>
+      <div class="options">
+        <div class="option" onclick="choosePlace('Makan romantis 🍝', 'Tempat favorit kamu')">🍝 Makan romantis</div>
+        <div class="option" onclick="choosePlace('Ngopi santai ☕', 'Cafe favorit kamu')">☕ Ngopi santai</div>
+        <div class="option" onclick="choosePlace('Nonton bareng 🎬', 'Bioskop')">🎬 Nonton bareng</div>
+        <div class="option" onclick="choosePlace('Jalan sore 🌆', 'Tempat favorit kita')">🌆 Jalan sore</div>
+      </div>
+    `;
+  }
+
+  function choosePlace(type, place) {
+    document.getElementById("content").innerHTML = `
+      <h1>Fix ya ❤️</h1>
+      <p>
+        Kita akan <strong>${type}</strong><br>
+        di <strong>${place}</strong><br><br>
+        📅 <strong>14 Februari</strong><br>
+        ⏰ <strong>Jam 17.00</strong><br><br>
+        Aku jemput kamu 😆💕<br>
+        Jangan batal.
+      </p>
+      <p><strong>Happy Valentine Cintaku 🤍</strong></p>
+    `;
+  }
+
+  // posisi awal NO
+  escapeNo();
+
+  // hearts
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = Math.random() * 14 + 14 + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 500);
+</script>
+
+</body>
+</html>
